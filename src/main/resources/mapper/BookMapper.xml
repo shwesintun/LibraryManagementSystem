@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jp.library.mapper.BookCategoryMapper">
+
+	<resultMap id="categoryResultMap"
+		type="co.jp.library.entity.Category">
+		<result property="categoryId" column="category_id" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
+
+
+	<select id="getAllCategories" resultMap="categoryResultMap">
+		SELECT category_name FROM categories
+	</select>
+
+	<select id="getCategoryById" resultMap="categoryResultMap"
+		parameterType="Long">
+		SELECT * FROM categories WHERE category_id =
+		#{categoryId}
+	</select>
+
+	<insert id="addCategory"
+		parameterType="co.jp.library.entity.Category">
+		INSERT INTO categories (category_id, category_name)
+		VALUES (#{categoryId},
+		#{categoryName})
+	</insert>
+</mapper>
+

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jp.library.mapper.BookMapper">
+	<resultMap id="bookResultMap"
+		type="co.jp.library.entity.Book">
+
+		<result property="registrationId" column="registration_id" />
+		<result property="bookName" column="book_name" />
+		<result property="bookCategory" column="book_category" />
+		<result property="author" column="author" />
+		<result property="producedYear" column="produced_year" />
+		<result property="bookType" column="book_type" />
+		<result property="fileName" column="file_name" />
+		<result property="pdfData" column="pdf_data" />
+		<result property="isEbook" column="isebook" />
+		 <result property="isLent" column="is_lent" />
+	</resultMap>
+
+	<select id="getAllBooks" resultMap="bookResultMap">
+		SELECT * FROM books
+	</select>
+
+	<select id="getBooks" resultMap="bookResultMap">
+		SELECT * FROM books WHERE
+		book_type='book'
+	</select>
+
+	<select id="getEBooks" resultMap="bookResultMap">
+		SELECT * FROM books WHERE
+		book_type='ebook'
+	</select>
+
+
+	<select id="searchBooks" resultType="co.jp.library.entity.Book">
+    SELECT * FROM books
+    <where>
+        <if test="bookCategory != null and bookCategory != 'default'">AND book_category = #{bookCategory}</if>
+        <if test="author != null and author != ''">AND author = #{author}</if>
+        <if test="registrationNumber != null and registrationNumber != ''">AND registration_id = #{registrationNumber}</if>
+        <if test="bookName != null and bookName != ''">AND book_name = #{bookName}</if>
+    </where>
+</select>
+	<select id="getBooksByCategory" resultMap="bookResultMap">
+		SELECT * FROM books
+		WHERE book_category=#{bookCategory}
+	</select>
+
+	<select id="getBookByRegistrationId" resultMap="bookResultMap" parameterType="String">
+    SELECT *
+    FROM books
+    WHERE registration_id = #{registrationId}
+</select>
+
+
+	<select id="getPdfDataByRegistrationId" resultType="byte[]">
+    SELECT pdf_data
+    FROM books
+    WHERE registration_id = #{registrationId}
+</select>
+
+
+	<insert id="addBook" parameterType="co.jp.library.entity.Book">
+		INSERT INTO books
+		(registration_id, book_name, book_category, author, produced_year,
+		book_type,
+		file_name, pdf_data)
+		VALUES
+		(#{registrationId}, #{bookName},
+		#{bookCategory}, #{author}, #{producedYear},
+		#{bookType}, #{fileName},
+		#{pdfData})
+	</insert>
+
+	<update id="updateBook"
+		parameterType="co.jp.library.entity.Book">
+		UPDATE books
+		SET
+		book_name = #{bookName},
+		book_category =
+		#{bookCategory},
+		author = #{author},
+		produced_year = #{producedYear},
+		book_type = #{bookType},
+		file_name = #{fileName},
+		pdf_data = #{pdfData}
+		WHERE
+		registration_id = #{registrationId}
+	</update>
+	
+	<update id="updateBookStatusByRegistrationId" parameterType="String"> 
+        UPDATE books
+        SET is_lent = true
+        WHERE registration_id = #{registrationId}
+    </update>
+	<update id="updateEbookStatusByRegistrationId" parameterType="String"> 
+    UPDATE books
+    SET isebook = true
+    WHERE registration_id = #{registrationId}
+</update>
+
+
+</mapper>
+

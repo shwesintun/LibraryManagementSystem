@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f2f2f2;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+#loginForm {
+	background: #FFF;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: 599px;
+	height: 611px;
+	text-align: center !important;
+}
+
+h1 {
+	color: #035114;
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 400;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"] {
+	width: 447px;
+	height: 49px;
+	flex-shrink: 0;
+	color: #1E1E1E;
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	border: 1px solid #000;
+	background: #F2FFF6;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+button {
+	width: 447px;
+	height: 49px;
+	flex-shrink: 0;
+	background: #92D050;
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+#goHomeButton {
+	background: #92D050;
+}
+
+#goHomeButton:hover {
+	background-color: #d0830b;
+}
+</style>
+</head>
+<body>
+
+	<form id="loginForm" th:action="@{/loginSuccess}" method="post">
+
+		<h1>Login</h1>
+		<input type="text" id="username" name="username"
+			value="Enter username" th:value="*{username}"><br> <br> <br> <input
+			type="password" id="password" name="password"><br> <br>
+		<br>
+
+		<button type="submit" id="loginButton">Login</button>
+		<br> <br> <br> <a href="/" id="goHomeButton"><button
+				type="button" id="goHomeButton">Go Home</button></a>
+	</form>
+	<!--  <div th:if="${loginError}" class="error-message">
+		<p th:text="${loginError}"></p>
+	</div>-->
+	<script>
+		
+	</script>
+</body>
+</html>

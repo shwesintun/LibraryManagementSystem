@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>Library Management System</title>
+<style>
+body {
+	overflow: auto;
+}
+
+.navbar {
+	background: #92D050;
+	width: 100%;
+	height: 149px;
+	flex-shrink: 0;
+}
+
+.navbar-brand img {
+	width: 180px;
+	height: 150px;
+	flex-shrink: 0;
+	fill: #548135;
+	margin-right: 0px;
+}
+
+.nav-link {
+	width: 115px;
+	height: 45px;
+	flex-shrink: 0;
+	border: 1px solid #548135;
+	padding: 10px 15px;
+	border-radius: 5px;
+	margin: 0 5px;
+	background-color: #548135;
+	text-align: center;
+	color: #fff;
+	font-family: Inter;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.nav-link:hover {
+	background-color: #a5db5e;
+	color: #ffc107;
+}
+
+.navbar-nav.ml-auto .nav-item:not(:last-child) {
+	margin-right: 20px;
+}
+
+.box-container {
+	background: rgba(84, 129, 53, 0.34);
+	border: 1px solid #ccc;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	max-width: 800px;
+	width: 100%;
+	margin-top: 20px;
+	display: flex;
+	height: 120px;
+	justify-content: space-between;
+	align-items: center;
+	margin-left: 30px;
+}
+
+.input-group {
+	width: calc(50% - 10px);
+	margin-bottom: 20px;
+	padding-right: 20px;
+}
+
+.input-group label {
+	display: flex;
+	width: 128px;
+	height: 35px;
+	flex-direction: column;
+	justify-content: center;
+	flex-shrink: 0;
+	color: #000;
+	text-align: center;
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.input-group input[type="text"] {
+	width: 120px;
+	height: 40px;
+	flex-shrink: 0;
+	background: #E6EFDF;
+}
+
+.form-control {
+	width: 100%;
+}
+
+.btn.btn-primary {
+	width: 120px;
+	height: 40px;
+	flex-shrink: 0;
+	background: #548135;
+	margin-top: 23px;
+}
+
+.list-group {
+	padding: 20px;
+	border-radius: 5px;
+	width: 250px;
+	height: 350px;
+	flex-shrink: 0;
+	margin-left: 200px;
+	margin-top: 100px;
+}
+
+.list-group-item {
+	align-items: center;
+	padding: 25px 10px;
+	border-bottom: 1px solid black;
+	display: flex;
+	width: 260px;
+	height: 38px;
+	color: #FFF;
+	margin-left: 10px;
+	text-align: left;
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	background: #548135;
+	padding: 25px 10px;
+}
+
+h5 {
+	width: 245px;
+	height: 26px;
+	flex-shrink: 0;
+	color: #FFF;
+	font-family: Inter;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	text-align: center;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	width: 900px;
+}
+
+.card {
+	margin-left: 30px;
+	width: 180px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	height: 290px;
+	background: rgba(139, 165, 139, 0.49);
+}
+
+.card-body img {
+	height: 100px;
+	text-align: center;
+	padding: 10px;
+}
+
+.card-body {
+	padding: 10px;
+	/* ... (existing styles) ... */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* .card-body a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+} */
+.card-footer {
+	padding: 10px;
+	background: #92D050;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+}
+
+/*footer {
+	
+	background: #92D050;
+	display: flex;
+	width: 100%;
+	min-height: 70px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	bottom: 0;
+	color: #035114;
+	text-align: center;
+	font-family: Inter;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}*/
+
+/* Tooltip container */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 200px;
+	background-color: #333;
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	transform: translateX(-50%);
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #333 transparent transparent transparent;
+}
+
+/* Show tooltip on hover */
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}
+
+.book-item, .ebook-item {
+	display: block;
+}
+</style>
+</head>
+<body>
+	
+	<nav class="navbar navbar-expand-lg navbar-light">
+
+		<a class="navbar-brand" href="/"> <img src="./img/logo.png"
+			alt="Logo" height="50">
+		</a>
+		<div class="container">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mx-auto">
+
+					<li class="nav-item"><a class="nav-link nav-item-books"
+						href="/books" style="color: #fff;">Books</a></li>
+					<li class="nav-item"><a class="nav-link nav-item-ebooks"
+						href="/ebooks" style="color: #fff;">EBooks</a></li>
+
+					<li class="nav-item"><a class="nav-link" href="/add"
+						style="color: #fff;">AddBook</a></li>
+					<li class="nav-item"><a class="nav-link" href="/category"
+						style="color: #fff;">AddCategory</a></li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto">
+					<div th:if="${session.login != null}">
+						<li class="nav-item"><a class="nav-link" href="/logout"
+							style="color: #fff;">Logout</a></li>
+					</div>				
+					<div th:unless="${session.login != null}">
+						<li class="nav-item"><a class="nav-link" href="/register"
+							style="color: #fff;">Register</a></li><br>
+						<li class="nav-item"><a class="nav-link" href="/login"
+							style="color: #fff;">Login</a></li>
+
+					</div>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+
+	<p class="navbar-brand">
+		<img src="./img/catalog.png" alt="catalog"
+			style="width: 47px; height: 49px; margin-left: 30px; margin-right: 20px;">
+		BOOK'S CATALOG
+	</p>
+	<div class="box-container" >
+
+		<div class="input-group">
+			<label for="catalog" style="text-align: center;">Category</label> <select
+				class="form-control" id="catalog">
+				<option th:each="category : ${categories}"
+					th:value="${category.categoryName}"
+					th:text="${category.categoryName}"></option>
+			</select>
+		</div>
+		<div class="input-group">
+			<label for="author">Author</label> <input type="text"
+				class="form-control" id="author">
+		</div>
+		<div class="input-group">
+			<label for="registerNumber">RegistrationNumber</label> <input
+				type="text" class="form-control" id="registerNumber">
+		</div>
+		<div class="input-group">
+			<label for="bookname">BookName</label> <input type="text"
+				class="form-control" id="bookname">
+		</div>
+		<a href="#" id="searchButton" class="btn btn-primary">Search</a>
+
+		<script>
+			// Add an event listener to the search button
+			document
+					.getElementById("searchButton")
+					.addEventListener(
+							"click",
+							function() {
+								// Get the values from the input fields
+								var category = document
+										.getElementById("catalog").value;
+								var author = document.getElementById("author").value;
+								var registrationNumber = document
+										.getElementById("registerNumber").value;
+								var bookname = document
+										.getElementById("bookname").value;
+
+								// Construct the search URL with the values
+								var searchUrl = "/search?bookCategory="
+										+ category + "&author=" + author
+										+ "&registrationId="
+										+ registrationNumber + "&bookName="
+										+ bookname;
+
+								// Redirect to the search URL
+								window.location.href = searchUrl;
+							});
+		</script>
+
+
+
+		<div class="list-group" id="list-category">
+			<a href="#" class="list-group-item list-group-item-action"
+				style="justify-content: center;">Book Categories</a>
+			<th:block th:each="category : ${categories}">
+				<a th:href="@{'/category/' + ${category.categoryName}}"
+					class="list-group-item list-group-item-action"
+					th:text="${category.categoryName}"></a>
+			</th:block>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="grid-container" id="list-category">
+		<div th:each="book : ${books}" class="card">
+			<div
+				class="card-body d-flex justify-content-center align-items-center">
+
+				<img src="./img/book.png" alt="Book" th:if="${!book.isEbook}"
+					th:attr="data-book-name=${book.bookName}, data-author=${book.author}, data-registration-id=${book.registrationId}, data-produced-year=${book.producedYear}">
+				<img src="./img/pdf.png" alt="Ebook" th:if="${book.isEbook}"
+					th:attr="data-book-name=${book.bookName}, data-author=${book.author}, data-registration-id=${book.registrationId}, data-produced-year=${book.producedYear}">
+
+				<p th:text="${book.bookName}" style="font-weight: bold;"></p>
+
+				<!-- Debug output 
+				<p th:text="${book.isEbook}"></p>-->
+				<br> <a th:if="${!book.isEbook}"
+					th:href="${book.isLent ? '#' : '/lend/' + book.registrationId}"
+					style="color: red" th:text="${book.isLent ? 'Lent' : 'Available'}"></a>
+
+					<a th:if="${book.isEbook}" th:href="'/download/' + ${book.registrationId}" style="color: blue">Download</a>
+
+				<br />
+			</div>
+			<div class="card-footer">
+
+				<a
+					th:href="@{/update/{registrationId}(registrationId=${book.registrationId})}"
+					style="color: #000;">UPDATE</a>
+			</div>
+		</div>
+	</div>
+
+	
+	<footer
+		style="display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 30px; background: #92D050; width: 100%; min-height: 70px; bottom:0">
+		@CopyRight By STAR SE </footer>
+
+	<script>
+		$(document).ready(function() {
+
+			$(".book-item, .ebook-item").show();
+
+			$(".nav-item-books").click(function() {
+				$(".book-item").show();
+				$(".ebook-item").hide();
+			});
+
+			$(".nav-item-ebooks").click(function() {
+				$(".book-item").hide();
+				$(".ebook-item").show();
+			});
+		});
+	</script>
+	<script>
+	$(document).ready(function() {
+	    $('a[href^="/lend/"]').each(function() {
+	        $(this).on('click', function(event) {
+	            event.preventDefault();
+	            var registrationId = $(this).attr('href').replace('/lend/', '');
+
+	            fetch('/lend/' + registrationId, {
+	                method: 'GET',
+	            })
+	            .then(function(response) {
+	                if (response.ok) {
+	                    return response.text();
+	                } else {
+	                    throw new Error('Failed to update book status');
+	                }
+	            })
+	            .then(function(status) {
+	                // Update the link text to the received status
+	                $(this).text(status);
+
+	                // Check if the status is "Lent," then redirect to the index page
+	                if (status === 'Lent') {
+	                    window.location.href = '/index'; // Change the URL to your index page URL
+	                }
+	            }.bind(this))
+	            .catch(function(error) {
+	                console.error('Error:', error);
+	            });
+	        });
+	    });
+	});
+
+
+	</script>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
