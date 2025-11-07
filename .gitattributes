@@ -1,0 +1,2 @@
+# Ensure Java source files are counted in github language stats
+*.java linguist-generated=false
